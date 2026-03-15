@@ -24,12 +24,12 @@ pub fn remove(entry: &LinkEntry) -> Result<()> {
     #[cfg(target_os = "windows")]
     return windows::OP::remove(entry);
     #[cfg(unix)]
-    return unix::remove(entry);
+    return unix::OP::remove(entry);
 }
 
 pub fn check(entry: &LinkEntry) -> LinkStatus {
     #[cfg(target_os = "windows")]
     return windows::OP::check(entry);
     #[cfg(unix)]
-    return unix::check(entry);
+    return unix::OP::check(entry);
 }

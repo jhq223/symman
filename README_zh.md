@@ -43,7 +43,7 @@ cargo install symman
 ### 3. 手动编译源码
 如果你想从源码构建，请先确保安装了 [Rust](https://rustup.rs/)，然后执行：
 ```bash
-git clone https://github.com/yourusername/symman.git
+git clone https://github.com/jhq223/symman.git
 cd symman
 cargo build --release
 ```

@@ -44,7 +44,7 @@ cargo install symman
 ### 3. Build from Source
 To compile manually, ensure you have [Rust installed](https://rustup.rs/), then run:
 ```bash
-git clone https://github.com/yourusername/symman.git
+git clone https://github.com/jhq223/symman.git
 cd symman
 cargo build --release
 ```

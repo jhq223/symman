@@ -27,7 +27,7 @@ jobs:
             bin: symman
             archive: symman-x86_64-unknown-linux-gnu.tar.gz
 
-          - os: macos-latest
+          - os: macos-13
             target: x86_64-apple-darwin
             bin: symman
             archive: symman-x86_64-apple-darwin.tar.gz
@@ -54,8 +54,8 @@ jobs:
         shell: powershell
         run: |
           Compress-Archive `
-            target/${{ matrix.target }}/release/${{ matrix.bin }} `
-            ${{ matrix.archive }}
+            -Path target/${{ matrix.target }}/release/${{ matrix.bin }} `
+            -DestinationPath ${{ matrix.archive }}
 
       - name: Package (Unix)
         if: matrix.os != 'windows-latest'
@@ -84,6 +84,7 @@ jobs:
         with:
           files: dist/**/*
           generate_release_notes: true
+          fail_on_unmatched_files: true
 
   publish-crate:
     name: Publish to crates.io
@@ -96,6 +97,6 @@ jobs:
       - uses: dtolnay/rust-toolchain@stable
 
       - name: Publish
-        run: cargo publish
+        run: cargo publish --locked
         env:
           CARGO_REGISTRY_TOKEN: ${{ secrets.CARGO_REGISTRY_TOKEN }}

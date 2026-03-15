@@ -1,21 +1,35 @@
 mod cli;
 mod commands;
+mod common;
 mod db;
+mod error;
 mod platform;
 
 use clap::Parser;
-use cli::{Cli, Commands};
+use colored::Colorize as _;
+
+use crate::cli::{Cli, Commands};
 
 fn main() {
     let cli = Cli::parse();
-    match cli.command {
-        Commands::List => todo!(),
-        Commands::Check { name } => todo!(),
+    let conn = db::init_db().unwrap_or_else(|e| {
+        eprintln!("Failed to initialize database: {}", e);
+        std::process::exit(1);
+    });
+
+    let result = match cli.command {
+        Commands::List => commands::list(&conn),
+        Commands::Check { name } => commands::check(&conn, name),
         Commands::New {
             link_path,
             target_path,
             name,
-        } => todo!(),
-        Commands::Remove { name, restore } => todo!(),
+        } => commands::new(&conn, link_path, target_path, name),
+        Commands::Remove { name, restore } => commands::remove(&conn, &name, restore),
+    };
+
+    if let Err(e) = result {
+        eprintln!("{} {}", "error:".red().bold(), e);
+        std::process::exit(1);
     }
 }

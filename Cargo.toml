@@ -2,10 +2,16 @@
 name = "symman"
 version = "0.1.0"
 edition = "2024"
+description = "A cross-platform symlink manager CLI tool."
+license = "LGPL-3.0-or-later"
+repository = "https://github.com/jhq223/symman"
+readme = "README.md"
 
 [dependencies]
+chrono = { version = "0.4.44", features = ["serde"] }
 clap = { version = "4.6.0", features = ["derive"] }
 colored = "3.1.1"
-rusqlite = { version = "0.38.0", features = ["bundled"] }
-tabled = "0.20.0"
+directories = "6.0.0"
+rusqlite = { version = "0.38.0", features = ["bundled", "chrono"] }
+tabled = { version = "0.20.0", features = ["ansi"] }
 thiserror = "2.0.18"
